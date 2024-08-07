@@ -27,7 +27,6 @@ public class MainController {
 //return "/main";
 //}
 	@GetMapping({ "/main-page", "/index" })
-	@ResponseBody
 	public String mainPage() {
 		System.out.println("mainPage() 호출 확인");
 		return "/main";

@@ -6,10 +6,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tenco.bank.dto.SignInDTO;
 import com.tenco.bank.dto.SignUpDTO;
 import com.tenco.bank.handler.exception.DataDeliveryException;
 import com.tenco.bank.handler.exception.RedirectException;
 import com.tenco.bank.repository.interfaces.UserRepository;
+import com.tenco.bank.repository.model.User;
 
 @Service // IoC 대상( 싱글톤으로 관리) 
 public class UserService {
@@ -34,7 +36,7 @@ public class UserService {
 		try {
 			result = userRepository.insert(dto.toUser());
 		} catch (DataAccessException e) {
-			throw new DataDeliveryException("잘못된 처리입니다", HttpStatus.INTERNAL_SERVER_ERROR);
+			throw new DataDeliveryException("중복 이름을 사용하실 수 없습니다", HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
 			throw new RedirectException("알 수 없는 오류", HttpStatus.SERVICE_UNAVAILABLE);
 		}
@@ -43,6 +45,26 @@ public class UserService {
 		}
 	}
 	
+	
+	public User readUser(SignInDTO dto) {
+		// 유효성 검사는 Controller에서 먼저하자
+		User userEntity = null;
+		try {
+			userEntity  = userRepository.findByUsernameAndPassword(dto.getUsername(), dto.getPassword());			
+		} catch (DataAccessException e) {
+			throw new DataDeliveryException("잘못된 처리 입니다", HttpStatus.INTERNAL_SERVER_ERROR);
+		} catch(Exception e) {
+			throw new RedirectException("알수 없는 오류", HttpStatus.SERVICE_UNAVAILABLE);
+		}
+		
+		if(userEntity == null) {
+			throw new DataDeliveryException("아이디 혹은 비밀번호를 입력하세요", HttpStatus.BAD_REQUEST);
+		}
+		
+		return userEntity;
+		
+		
+	}
 }
 
 
