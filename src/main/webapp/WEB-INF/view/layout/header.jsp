@@ -52,10 +52,10 @@
 						<h3>서비스 목록</h3>
 						<p>계좌목록, 생성, 출금, 입금, 이체 페이지를 활용할 수 있어요</p>
 						<ul class="nav nav-pills flex-column">
-							<li class="nav-item"><a class="nav-link" href="#">나의계좌목록</a></li>
-							<li class="nav-item"><a class="nav-link" href="#">신규계좌생성</a></li>
-							<li class="nav-item"><a class="nav-link" href="#">출금하기</a></li>
-							<li class="nav-item"><a class="nav-link" href="#">입금하기</a></li>
+							<li class="nav-item"><a class="nav-link" href="/account/list">나의계좌목록</a></li>
+							<li class="nav-item"><a class="nav-link" href="/account/save">신규계좌생성</a></li>
+							<li class="nav-item"><a class="nav-link" href="/account/withdrawal">출금하기</a></li>
+							<li class="nav-item"><a class="nav-link" href="/account/deposit">입금하기</a></li>
 							<li class="nav-item"><a class="nav-link" href="#">이체하기</a></li>
 						</ul>
 						<hr class="d-sm-none">

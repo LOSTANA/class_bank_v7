@@ -12,6 +12,7 @@ import com.tenco.bank.handler.exception.DataDeliveryException;
 import com.tenco.bank.handler.exception.RedirectException;
 import com.tenco.bank.repository.interfaces.UserRepository;
 import com.tenco.bank.repository.model.User;
+import com.tenco.bank.utils.Define;
 
 @Service // IoC 대상( 싱글톤으로 관리) 
 public class UserService {
@@ -38,10 +39,10 @@ public class UserService {
 		} catch (DataAccessException e) {
 			throw new DataDeliveryException("중복 이름을 사용하실 수 없습니다", HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
-			throw new RedirectException("알 수 없는 오류", HttpStatus.SERVICE_UNAVAILABLE);
+			throw new RedirectException(Define.UNKNOWN, HttpStatus.SERVICE_UNAVAILABLE);
 		}
 		if(result != 1) {
-			throw new DataDeliveryException("회원가입 실패", HttpStatus.INTERNAL_SERVER_ERROR);
+			throw new DataDeliveryException(Define.FAIL_TO_CREATE_USER, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
@@ -52,9 +53,9 @@ public class UserService {
 		try {
 			userEntity  = userRepository.findByUsernameAndPassword(dto.getUsername(), dto.getPassword());			
 		} catch (DataAccessException e) {
-			throw new DataDeliveryException("잘못된 처리 입니다", HttpStatus.INTERNAL_SERVER_ERROR);
+			throw new DataDeliveryException(Define.FAILED_PROCESSING, HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch(Exception e) {
-			throw new RedirectException("알수 없는 오류", HttpStatus.SERVICE_UNAVAILABLE);
+			throw new RedirectException(Define.UNKNOWN, HttpStatus.SERVICE_UNAVAILABLE);
 		}
 		
 		if(userEntity == null) {

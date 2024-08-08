@@ -43,7 +43,7 @@ public class MainController {
 		if (true) {
 			throw new RedirectException("잘못된 요청입니다.", HttpStatus.NOT_FOUND);
 		}
-		return "/main";
+		return "main";
 	}
 
 // http://localhost:8080/error-test2
@@ -52,7 +52,7 @@ public class MainController {
 		if (true) {
 			throw new DataDeliveryException("잘못된 데이터 입니다.", HttpStatus.BAD_REQUEST);
 		}
-		return "/main";
+		return "main";
 	}
 
 // http://localhost:8080/error-test3
@@ -61,7 +61,7 @@ public class MainController {
 		if (true) {
 			throw new UnAuthorizedException("인증 안된 사용자 입니다", HttpStatus.UNAUTHORIZED);
 		}
-		return "/main";
+		return "main";
 	}
 
 }
