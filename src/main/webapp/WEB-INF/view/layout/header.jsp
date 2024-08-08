@@ -56,7 +56,7 @@
 							<li class="nav-item"><a class="nav-link" href="/account/save">신규계좌생성</a></li>
 							<li class="nav-item"><a class="nav-link" href="/account/withdrawal">출금하기</a></li>
 							<li class="nav-item"><a class="nav-link" href="/account/deposit">입금하기</a></li>
-							<li class="nav-item"><a class="nav-link" href="#">이체하기</a></li>
+							<li class="nav-item"><a class="nav-link" href="/account/transfer">이체하기</a></li>
 						</ul>
 						<hr class="d-sm-none">
 					</div>
