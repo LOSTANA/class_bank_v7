@@ -11,11 +11,11 @@
 	<form action="/user/sign-in" method="post">
 	
 		<div class="form-group">
-			<label for="username">username:</label>
+			<label for="username">아이디:</label>
 			<input type="text" class="form-control" placeholder="Enter username" id="username" name="username" value="길동">
 		</div>
 		<div class="form-group">
-			<label for="pwd">Password:</label>
+			<label for="pwd">비밀번호:</label>
 			<input type="password" class="form-control" placeholder="Enter password" id="pwd" name="password" value="1234">
 		</div>
 	
@@ -24,6 +24,7 @@
 
 </div>
 <!-- end of content.jsp(xxx.jsp)   -->
-
+</div>
+</div>
 <!-- footer.jsp  -->
 <%@ include file="/WEB-INF/view/layout/footer.jsp"%>

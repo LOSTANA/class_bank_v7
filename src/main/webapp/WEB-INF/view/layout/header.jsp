@@ -24,20 +24,23 @@
 				<p>마이바이티스를 활용한 스프링 부트 앱 만들어보기</p>
 			</div>
 			<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-				<a class="navbar-brand" href="#">Navbar</a>
+				<a class="navbar-brand" href="/index">메뉴</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="collapse navbar-collapse" id="collapsibleNavbar">
 					<ul class="navbar-nav">
-						<c:choose> <c:when test="${principal !=null}">
-							<%-- 사용자가 로그인 상태 --%>
-							<li class="nav-item"><a class="nav-link" href="/user/logout">로그아웃</a></li>
-						</c:when> <c:otherwise>
-							<%--사용자가 로그인 안된 상태 --%>
-							<li class="nav-item"><a class="nav-link" href="/user/sign-in">로그인</a></li>
-							<li class="nav-item"><a class="nav-link" href="/user/sign-up">회원가입</a></li>
-						</c:otherwise> </c:choose>
+						<c:choose>
+							<c:when test="${principal !=null}">
+								<%-- 사용자가 로그인 상태 --%>
+								<li class="nav-item"><a class="nav-link" href="/user/logout">로그아웃</a></li>
+							</c:when>
+							<c:otherwise>
+								<%--사용자가 로그인 안된 상태 --%>
+								<li class="nav-item"><a class="nav-link" href="/user/sign-in">로그인</a></li>
+								<li class="nav-item"><a class="nav-link" href="/user/sign-up">회원가입</a></li>
+							</c:otherwise>
+						</c:choose>
 					</ul>
 				</div>
 			</nav>
@@ -60,4 +63,6 @@
 						</ul>
 						<hr class="d-sm-none">
 					</div>
-					<!-- end of header.jsp  -->
+				
+		
+			<!-- end of header.jsp  -->

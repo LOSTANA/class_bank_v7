@@ -1,5 +1,6 @@
 package com.tenco.bank.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import com.tenco.bank.repository.interfaces.AccountRepository;
 import com.tenco.bank.repository.interfaces.HistoryRepository;
 import com.tenco.bank.repository.model.Account;
 import com.tenco.bank.repository.model.History;
+import com.tenco.bank.repository.model.HistoryAccount;
 import com.tenco.bank.utils.Define;
 
 @Service
@@ -46,13 +48,13 @@ public class AccountService {
 		try {
 			result = accountRepository.insert(dto.toAccount(principalId));
 		} catch (DataAccessException e) {
-			throw new DataDeliveryException("잘못된 요청입니다", HttpStatus.INTERNAL_SERVER_ERROR);
+			throw new DataDeliveryException(Define.EXIST_ACCOUNT, HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
-			throw new RedirectException("알 수 없는 오류 입니다", HttpStatus.SERVICE_UNAVAILABLE);
+			throw new RedirectException(Define.UNKNOWN, HttpStatus.SERVICE_UNAVAILABLE);
 		}
 
 		if (result == 0) {
-			throw new DataDeliveryException("정상 처리 되지 않았습니다", HttpStatus.INTERNAL_SERVER_ERROR);
+			throw new DataDeliveryException(Define.FAIL_TO_CREATE_ACCOUNT, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -64,7 +66,7 @@ public class AccountService {
 		} catch (DataAccessException e) {
 			throw new DataDeliveryException("잘못된 처리 입니다.", HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
-			throw new RedirectException("알 수 없는 오류", HttpStatus.SERVICE_UNAVAILABLE);
+			throw new RedirectException(Define.UNKNOWN, HttpStatus.SERVICE_UNAVAILABLE);
 		}
 		return accountListEntity;
 	}
@@ -160,13 +162,14 @@ public class AccountService {
 
 		// 1.
 		Account withdrawAccount = accountRepository.findByNumber(dto.getWAccountNumber());
+		Account depositAccount = accountRepository.findByNumber(dto.getDAccountNumber());
 		if (withdrawAccount == null) {
-			throw new DataDeliveryException(Define.NOT_EXIST_ACCOUNT, HttpStatus.BAD_REQUEST);
+			throw new DataDeliveryException(Define.NOT_EXIST_WITHDRAW_ACCOUNT, HttpStatus.BAD_REQUEST);
 		}
 		// 2.
-		Account depositAccount = accountRepository.findByNumber(dto.getDAccountNumber());
+		
 		if (depositAccount == null) {
-			throw new DataDeliveryException(Define.NOT_EXIST_ACCOUNT, HttpStatus.BAD_REQUEST);
+			throw new DataDeliveryException(Define.NOT_EXIST_DEPOSIT_ACCOUNT, HttpStatus.BAD_REQUEST);
 		}
 		// 3.
 		withdrawAccount.checkOwner(principalId);
@@ -200,6 +203,36 @@ public class AccountService {
 		if (rowResultCount != 1) {
 			throw new DataDeliveryException(Define.FAILED_PROCESSING, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+	
+	/**
+	 * 단일 계좌 조회 기능
+	 * @param accountId (px)
+	 * @return
+	 */
+	
+	// 단일 계좌 조회 기능 (accountId 기준)
+
+	public Account readAccountById(Integer accountId) {
+		
+		Account accountEntity = accountRepository.findByAccountId(accountId);
+		if(accountEntity == null) {
+			throw new DataDeliveryException(Define.NOT_EXIST_ACCOUNT, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return accountEntity;
+	}
+	/**
+	 * 단일 계좌 거래 내역 조회
+	 * @param type = [all, deposit, withdrawal]
+	 * @param accountId (pk)
+	 * @return 전체, 입금, 출금 거래내역(3가지 타입) 반환
+	 */
+	
+	public List<HistoryAccount> readHistoryByAccountId(String type, Integer accountId){
+		List<HistoryAccount> list = new ArrayList<>();
+		list = historyRepository.findByAccountIdAndTypeOfHistory(type, accountId);
+		return list;
+		
 	}
 
 }

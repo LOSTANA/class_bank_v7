@@ -10,15 +10,15 @@
 
 	<form action="/user/sign-up" method="post">
 		<div class="form-group">
-			<label for="username">username:</label>
+			<label for="username">아이디:</label>
 			<input type="text" class="form-control" placeholder="Enter username" id="username" name="username">
 		</div>
 		<div class="form-group">
-			<label for="pwd">Password:</label>
+			<label for="pwd">비밀번호:</label>
 			<input type="password" class="form-control" placeholder="Enter password" id="pwd" name="password">
 		</div>
 		<div class="form-group">
-			<label for="fullname">fullname:</label>
+			<label for="fullname">이름:</label>
 			<input type="text" class="form-control" placeholder="Enter fullname" id="fullname" name="fullname">
 		</div>
 		<button type="submit" class="btn btn-primary">회원가입</button>
@@ -26,6 +26,7 @@
 
 </div>
 <!-- end of content.jsp(xxx.jsp)   -->
-
+</div>
+</div>
 <!-- footer.jsp  -->
 <%@ include file="/WEB-INF/view/layout/footer.jsp"%>
