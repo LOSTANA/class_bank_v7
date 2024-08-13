@@ -9,12 +9,19 @@ import lombok.ToString;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @Builder
+@ToString
 public class WithdrawalDTO {
-
+	
 	private Long amount;
-	private String wAccountNumber;
-	private String wAccountPassword;
+	private String wAccountNumber; 
+	private String wAccountPassword; 
 }
+
+
+
+
+
+
+
 

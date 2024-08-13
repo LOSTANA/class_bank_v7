@@ -14,20 +14,25 @@ import lombok.ToString;
 @Builder
 @ToString
 public class SignUpDTO {
-
-	private String username;
-	private String password;
+	
+	private String username; 
+	private String password; 
 	private String fullname;
 	
-	// 2단계 로직
+	// 2단계 로직 - User Object 반환 
 	public User toUser() {
 		return User.builder()
 				.username(this.username)
 				.password(this.password)
 				.fullname(this.fullname)
 				.build();
-	}
+	} 
 	
-	// TODO - 추후 사진 업로드 기능 추가 예정
-	
+	// todo - 추후 사진 업로드 기능 추가 예정 	
 }
+
+
+
+
+
+

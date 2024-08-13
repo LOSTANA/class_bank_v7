@@ -14,9 +14,16 @@ import lombok.ToString;
 @Builder
 @ToString
 public class User {
-	private Integer id;
-	private String username;
-	private String password;
-	private String fullname;
+	private Integer id; 
+	private String username; 
+	private String password; 
+	private String fullname; 
 	private Timestamp createdAt;
 }
+
+
+
+
+
+
+

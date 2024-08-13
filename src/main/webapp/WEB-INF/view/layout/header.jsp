@@ -5,9 +5,9 @@
 <html lang="en">
 <head>
 <title>myBank</title>
-<link rel="icon" href="/git.ico" type="image/x-icon">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="/css/common.css">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
@@ -24,22 +24,22 @@
 				<p>마이바이티스를 활용한 스프링 부트 앱 만들어보기</p>
 			</div>
 			<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-				<a class="navbar-brand" href="/index">메뉴</a>
+				<a class="navbar-brand" href="/index">홈</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="collapse navbar-collapse" id="collapsibleNavbar">
 					<ul class="navbar-nav">
 						<c:choose>
-							<c:when test="${principal !=null}">
-								<%-- 사용자가 로그인 상태 --%>
+							<c:when test="${principal != null}">
+								<%-- 사용자가 로그인 상태  --%>
 								<li class="nav-item"><a class="nav-link" href="/user/logout">로그아웃</a></li>
 							</c:when>
 							<c:otherwise>
-								<%--사용자가 로그인 안된 상태 --%>
+								<%-- 사용자가 로그인 안된 상태  --%>
 								<li class="nav-item"><a class="nav-link" href="/user/sign-in">로그인</a></li>
 								<li class="nav-item"><a class="nav-link" href="/user/sign-up">회원가입</a></li>
-							</c:otherwise>
+							</c:otherwise>	
 						</c:choose>
 					</ul>
 				</div>
@@ -53,7 +53,7 @@
 						<div class="m--profile"></div>
 						<p>코린이 개발을 위한 뱅크 앱</p>
 						<h3>서비스 목록</h3>
-						<p>계좌목록, 생성, 출금, 입금, 이체 페이지를 활용할 수 있어요</p>
+						<p>계좌목록,생성, 출금, 입금, 이체 페이지를 활용할 수 있어요</p>
 						<ul class="nav nav-pills flex-column">
 							<li class="nav-item"><a class="nav-link" href="/account/list">나의계좌목록</a></li>
 							<li class="nav-item"><a class="nav-link" href="/account/save">신규계좌생성</a></li>
@@ -63,6 +63,5 @@
 						</ul>
 						<hr class="d-sm-none">
 					</div>
-				
-		
-			<!-- end of header.jsp  -->
+					<!-- end of header.jsp  -->
+					

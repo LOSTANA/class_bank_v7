@@ -1,3 +1,4 @@
+
 create table user_tb(
 	id int auto_increment primary key, 
     username varchar(50) not null unique, 
@@ -24,3 +25,4 @@ create table history_tb(
     d_balance bigint comment '입금 요청 후 계좌 잔액', 
     created_at timestamp not null default now() 
 );
+
