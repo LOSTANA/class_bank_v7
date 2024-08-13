@@ -3,6 +3,7 @@ package com.tenco.bank.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -82,28 +83,28 @@ public class AccountService {
 	@Transactional
 	public void updateAccountWithdraw(WithdrawalDTO dto, Integer principalId) {
 		// 1.
-		Account accoutEntity = accountRepository.findByNumber(dto.getWAccountNumber());
-		if (accoutEntity == null) {
+		Account accountEntity = accountRepository.findByNumber(dto.getWAccountNumber());
+		if (accountEntity == null) {
 			throw new DataDeliveryException(Define.NOT_EXIST_ACCOUNT, HttpStatus.BAD_REQUEST);
 		}
 
 		// 2
-		accoutEntity.checkOwner(principalId);
+		accountEntity.checkOwner(principalId);
 		// 3
-		accoutEntity.checkPassword(dto.getWAccountPassword());
+		accountEntity.checkPassword(dto.getWAccountPassword());
 		// 4
-		accoutEntity.checkBalance(dto.getAmount());
+		accountEntity.checkBalance(dto.getAmount());
 		// 5
 		// accoutEntity 객체의 잔액을 변경하고 업데이트 처리해야 한다.
-		accoutEntity.withdraw(dto.getAmount());
+		accountEntity.withdraw(dto.getAmount());
 		// update 처리
-		accountRepository.updateById(accoutEntity);
+		accountRepository.updateById(accountEntity);
 		// 6 - 거래 내역 등록
 		History history = new History();
 		history.setAmount(dto.getAmount());
-		history.setWBalance(accoutEntity.getBalance());
+		history.setWBalance(accountEntity.getBalance());
 		history.setDBalance(null);
-		history.setWAccountId(accoutEntity.getId());
+		history.setWAccountId(accountEntity.getId());
 		history.setDAccountId(null);
 
 		int rowResultCount = historyRepository.insert(history);
@@ -121,23 +122,24 @@ public class AccountService {
 
 	@Transactional
 	public void updateAccountDeposit(DepositDTO dto, Integer principalId) {
-		Account accoutEntity = accountRepository.findByNumber(dto.getDAccountNumber());
-		if (accoutEntity == null) {
+		Account accountEntity = accountRepository.findByNumber(dto.getDAccountNumber());
+		if (accountEntity == null) {
 			throw new DataDeliveryException(Define.NOT_EXIST_ACCOUNT, HttpStatus.BAD_REQUEST);
 		}
 
-		accoutEntity.checkOwner(principalId);
+		accountEntity.checkOwner(principalId);
+		
 
-		accoutEntity.deposit(dto.getAmount());
+		accountEntity.deposit(dto.getAmount());
 
-		accountRepository.updateById(accoutEntity);
+		accountRepository.updateById(accountEntity);
 
 		History history = new History();
 		history.setAmount(dto.getAmount());
 		history.setWBalance(null);
-		history.setDBalance(accoutEntity.getBalance());
+		history.setDBalance(accountEntity.getBalance());
 		history.setWAccountId(null);
-		history.setDAccountId(accoutEntity.getId());
+		history.setDAccountId(accountEntity.getId());
 
 		int rowResultCount = historyRepository.insert(history);
 		if (rowResultCount != 1) {
@@ -222,17 +224,23 @@ public class AccountService {
 		return accountEntity;
 	}
 	/**
-	 * 단일 계좌 거래 내역 조회
+	 * 단일 계좌 거래 내역 조회 
 	 * @param type = [all, deposit, withdrawal]
 	 * @param accountId (pk)
-	 * @return 전체, 입금, 출금 거래내역(3가지 타입) 반환
+	 * @return 전체, 입금, 출금 거래내역(3가지 타입) 반환 
 	 */
-	
-	public List<HistoryAccount> readHistoryByAccountId(String type, Integer accountId){
+	// @Transactional
+	public List<HistoryAccount> readHistoryByAccountId(String type, Integer accountId, int page, int size) {
 		List<HistoryAccount> list = new ArrayList<>();
-		list = historyRepository.findByAccountIdAndTypeOfHistory(type, accountId);
+		int limit = size;
+		int offset = (page - 1) * size;
+		list = historyRepository.findByAccountIdAndTypeOfHistory(type, accountId, limit, offset);
 		return list;
-		
+	}
+	
+	// 해당 계좌와 거래 유형에 따른 전체 레코드 수를 반환하는 메서드
+	public int countHistoryByAccountIdAndType(String type, Integer accountId) {
+		return historyRepository.countByAccountIdAndType(type, accountId);
 	}
 
 }

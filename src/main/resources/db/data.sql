@@ -9,7 +9,11 @@ values('마이', '1234', '콜', now());
 
 insert into account_tb
 		(number, password, balance, user_id, created_at)
-values('1111', '1234', 1300, 1, now());        
+values('1111', '1234', 1300, 1, now());     
+
+insert into account_tb
+		(number, password, balance, user_id, created_at)
+values('5555', '1234', 35000, 1, now()); 
 
 insert into account_tb
 		(number, password, balance, user_id, created_at)
