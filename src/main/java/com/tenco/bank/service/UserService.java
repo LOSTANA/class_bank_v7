@@ -35,13 +35,15 @@ public class UserService {
 	public void createUser(SignUpDTO dto) {
 		
 		int result = 0; 
+		
+		System.out.println(dto.getMFile().getOriginalFilename());
 		try {
 			// 코드 추가 부분 
 			// 회원 가입 요청시 사용자가 던진 비밀번호 값을 암호화 처리 해야 함 
 			String hashPwd = passwordEncoder.encode(dto.getPassword());
 			System.out.println("hashPwd : " + hashPwd);
 			dto.setPassword(hashPwd);
-			result = userRepository.insert(dto.toUser());
+			// result = userRepository.insert(dto.toUser());
 		} catch (DataAccessException e) {
 			throw new DataDeliveryException("중복 이름을 사용할 수 없습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
 		} catch (Exception e) {
